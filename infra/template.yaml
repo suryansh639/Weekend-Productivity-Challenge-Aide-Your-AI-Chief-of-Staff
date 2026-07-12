@@ -31,7 +31,7 @@ Globals:
     Runtime: python3.12
     MemorySize: 512
     Timeout: 30
-    Architectures: [arm64]
+    Architectures: [x86_64]
     Environment:
       Variables:
         AIDE_LLM_PROVIDER: bedrock

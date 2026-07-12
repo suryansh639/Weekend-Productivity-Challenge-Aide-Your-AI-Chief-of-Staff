@@ -1,0 +1,134 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: "Aide ??? an agentic AI Chief-of-Staff. Serverless backend: FastAPI on\
+  \ Lambda (via Mangum) behind an HTTP API, DynamoDB single-table store, Amazon Bedrock\
+  \ for the LLM, and a scheduled Lambda that proactively drafts follow-up nudges.\n"
+Parameters:
+  BedrockModelId:
+    Type: String
+    Default: us.amazon.nova-lite-v1:0
+    Description: Bedrock model id / inference profile (Amazon Nova).
+  BedrockEmbedModelId:
+    Type: String
+    Default: amazon.titan-embed-text-v2:0
+  OwnerName:
+    Type: String
+    Default: You
+  OwnerEmail:
+    Type: String
+    Default: you@example.com
+  NudgeStaleDays:
+    Type: Number
+    Default: 3
+  CorsOrigins:
+    Type: String
+    Default: '*'
+Globals:
+  Function:
+    Runtime: python3.12
+    MemorySize: 512
+    Timeout: 30
+    Architectures:
+    - x86_64
+    Environment:
+      Variables:
+        AIDE_LLM_PROVIDER: bedrock
+        AIDE_STORE_BACKEND: dynamo
+        AIDE_DYNAMO_TABLE:
+          Ref: Table
+        AIDE_BEDROCK_MODEL_ID:
+          Ref: BedrockModelId
+        AIDE_BEDROCK_EMBED_MODEL_ID:
+          Ref: BedrockEmbedModelId
+        AIDE_OWNER_NAME:
+          Ref: OwnerName
+        AIDE_OWNER_EMAIL:
+          Ref: OwnerEmail
+        AIDE_NUDGE_STALE_DAYS:
+          Ref: NudgeStaleDays
+        AIDE_CORS_ORIGINS:
+          Ref: CorsOrigins
+Resources:
+  Table:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+      - AttributeName: pk
+        AttributeType: S
+      - AttributeName: sk
+        AttributeType: S
+      KeySchema:
+      - AttributeName: pk
+        KeyType: HASH
+      - AttributeName: sk
+        KeyType: RANGE
+  Api:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowOrigins:
+        - '*'
+        AllowHeaders:
+        - '*'
+        AllowMethods:
+        - '*'
+  ApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://aide-artifacts-818515814116-us-east-1/aide/1ccb7d1740ed22654cc0fad0e7b02a39
+      Handler: app.main.handler
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: Table
+      - Statement:
+        - Effect: Allow
+          Action:
+          - bedrock:InvokeModel
+          Resource: '*'
+      Events:
+        Root:
+          Type: HttpApi
+          Properties:
+            ApiId:
+              Ref: Api
+            Path: /
+            Method: ANY
+        Proxy:
+          Type: HttpApi
+          Properties:
+            ApiId:
+              Ref: Api
+            Path: /{proxy+}
+            Method: ANY
+  NudgeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://aide-artifacts-818515814116-us-east-1/aide/1ccb7d1740ed22654cc0fad0e7b02a39
+      Handler: app.lambdas.nudge_handler.handler
+      Timeout: 60
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: Table
+      - Statement:
+        - Effect: Allow
+          Action:
+          - bedrock:InvokeModel
+          Resource: '*'
+      Events:
+        DailyScan:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 8 ? * MON-FRI *)
+            Name: aide-nudge-scan
+            Description: Proactive follow-up nudge scan
+Outputs:
+  ApiUrl:
+    Description: Base URL of the Aide API (set as VITE_API_BASE for the frontend build).
+    Value:
+      Fn::Sub: https://${Api}.execute-api.${AWS::Region}.amazonaws.com
+  TableName:
+    Value:
+      Ref: Table
