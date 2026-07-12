@@ -8,8 +8,8 @@ Description: >
 Parameters:
   BedrockModelId:
     Type: String
-    Default: us.anthropic.claude-3-5-sonnet-20241022-v2:0
-    Description: Bedrock model id / inference profile for Claude.
+    Default: us.amazon.nova-lite-v1:0
+    Description: Bedrock model id / inference profile (Amazon Nova).
   BedrockEmbedModelId:
     Type: String
     Default: amazon.titan-embed-text-v2:0

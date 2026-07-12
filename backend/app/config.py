@@ -27,7 +27,7 @@ class Settings(BaseSettings):
 
     # AWS / Bedrock
     aws_region: str = "us-east-1"
-    bedrock_model_id: str = "us.anthropic.claude-3-5-sonnet-20241022-v2:0"
+    bedrock_model_id: str = "us.amazon.nova-lite-v1:0"
     bedrock_embed_model_id: str = "amazon.titan-embed-text-v2:0"
     dynamo_table: str = "aide"
 

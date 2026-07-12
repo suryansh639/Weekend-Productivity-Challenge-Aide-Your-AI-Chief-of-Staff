@@ -1,4 +1,4 @@
-"""Amazon Bedrock LLM client — Claude via the Converse API, Titan for embeddings."""
+"""Amazon Bedrock LLM client — Amazon Nova via the Converse API, Titan for embeddings."""
 from __future__ import annotations
 
 import json

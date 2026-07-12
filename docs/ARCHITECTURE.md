@@ -28,7 +28,7 @@ and flip to AWS in production by changing environment variables.
 │  supervisor /  │   │  LocalStore (dev)      │   │  MockLLM (dev/tests)   │
 │  nudges        │   └───────────┬───────────┘   └───────────┬────────────┘
 └────────────────┘               │                            │
-                          Amazon DynamoDB            Amazon Bedrock (Claude + Titan)
+                          Amazon DynamoDB            Amazon Bedrock (Nova + Titan)
 ```
 
 ## Layers

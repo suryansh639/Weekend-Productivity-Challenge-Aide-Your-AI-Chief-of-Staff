@@ -9,7 +9,7 @@ on S3 + CloudFront (or Amplify Hosting).
 - AWS CLI configured (`aws configure`).
 - [AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html).
 - **Bedrock model access**: in the Bedrock console → *Model access*, enable
-  *Anthropic Claude 3.5 Sonnet* and *Amazon Titan Text Embeddings V2* in your region.
+  *Amazon Nova Lite* and *Amazon Titan Text Embeddings V2* in your region.
 
 ## 1. Deploy the backend
 
@@ -53,7 +53,7 @@ For HTTPS + a real URL, put a CloudFront distribution in front of the bucket
 
 | Service | Role |
 |---|---|
-| **Amazon Bedrock** | Claude (Converse) for triage/prep/nudges; Titan for memory embeddings |
+| **Amazon Bedrock** | Amazon Nova (Converse) for triage/prep/nudges; Titan for memory embeddings |
 | **AWS Lambda** | FastAPI API + scheduled nudge worker |
 | **Amazon API Gateway** | HTTP API front door |
 | **Amazon DynamoDB** | Single-table store (items, actions, memory) |

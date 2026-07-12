@@ -1,7 +1,7 @@
 """LLM client protocol.
 
 The rest of the app depends only on this interface, so we can run against a
-deterministic mock offline and Amazon Bedrock (Claude + Titan) in production
+deterministic mock offline and Amazon Bedrock (Nova + Titan) in production
 without changing a single line of agent code.
 """
 from __future__ import annotations
@@ -25,7 +25,7 @@ class LLMClient(Protocol):
 def extract_json(text: str) -> dict:
     """Best-effort extraction of a JSON object from an LLM response.
 
-    Claude occasionally wraps JSON in prose or fenced code blocks; we recover the
+    The model occasionally wraps JSON in prose or fenced code blocks; we recover the
     first balanced ``{...}`` block so callers get structured data reliably.
     """
     text = text.strip()

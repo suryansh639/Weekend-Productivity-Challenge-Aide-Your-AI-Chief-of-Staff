@@ -52,7 +52,7 @@ real credentials.
 
 ## AWS Services Used / Architecture Overview
 
-- **Amazon Bedrock** — Claude (via the Converse API) powers triage, prep, and nudge
+- **Amazon Bedrock** — Amazon Nova (via the Converse API) powers triage, prep, and nudge
   drafting; Titan Text Embeddings power semantic memory recall.
 - **AWS Lambda** — hosts the FastAPI backend (through Mangum) and a separate
   scheduled nudge worker.
@@ -81,7 +81,7 @@ small serverless footprint can go.
 
 ## Link to App or Repo
 
-Source code: **<add your public GitHub repo URL here>**
+Source code: **https://github.com/suryansh639/Weekend-Productivity-Challenge-Aide-Your-AI-Chief-of-Staff**
 
 Run it locally in two commands (see the README) — it works fully offline with a mock
 LLM and seeded inbox, then deploys to AWS with `sam deploy --guided`.

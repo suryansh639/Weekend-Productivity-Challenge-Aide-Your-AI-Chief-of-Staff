@@ -28,7 +28,7 @@ Built for the **AWS Builder Center — Build a Productivity App Weekend Challeng
                         │ Lambda (FastAPI + Mangum)                │
                         ▼                                          │
               ┌───────────────────┐   Converse / Titan             │
-              │  Agent orchestra- │ ─────────────────► Amazon Bedrock (Claude + Titan)
+              │  Agent orchestra- │ ─────────────────► Amazon Bedrock (Nova + Titan)
               │  tion (supervisor │
               │  + workers, HITL) │
               └───────────────────┘
