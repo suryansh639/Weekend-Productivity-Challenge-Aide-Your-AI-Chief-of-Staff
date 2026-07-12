@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Local Aide store
+*.aide_data.json
+.aide_*.json
+backend/.aide_*.json
+
+# Node / frontend
+node_modules/
+frontend/dist/
+
+# SAM / AWS
+.aws-sam/
+samconfig.toml
+
+# Env & secrets
+.env
+*.local
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
