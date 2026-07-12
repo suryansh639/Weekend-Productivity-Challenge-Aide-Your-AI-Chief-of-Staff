@@ -28,3 +28,6 @@ samconfig.toml
 Thumbs.db
 .vscode/
 .idea/
+
+# Deployment build artifacts (vendored Lambda deps, packaged templates)
+build/
