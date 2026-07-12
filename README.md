@@ -6,6 +6,9 @@
 
 Built for the **AWS Builder Center — Build a Productivity App Weekend Challenge**.
 
+**Live demo:** http://aide-web-818515814116.s3-website-us-east-1.amazonaws.com
+· **API:** https://h8m79exwpc.execute-api.us-east-1.amazonaws.com/health
+
 ---
 
 ## Why it's *agentic*, not just "AI-assisted"

@@ -60,7 +60,7 @@ real credentials.
 - **Amazon DynamoDB** — a single-table store for inbox items, actions, and memory.
 - **Amazon EventBridge Scheduler** — a weekday cron that triggers the proactive
   nudge scan.
-- **Amazon S3 + CloudFront** — static hosting for the dashboard.
+- **Amazon S3** — static website hosting for the React dashboard.
 
 Flow: the SPA calls API Gateway → a Lambda running FastAPI → the agent layer, which
 calls Bedrock and persists to DynamoDB. A second Lambda fires on a schedule to draft
@@ -81,7 +81,9 @@ small serverless footprint can go.
 
 ## Link to App or Repo
 
-Source code: **https://github.com/suryansh639/Weekend-Productivity-Challenge-Aide-Your-AI-Chief-of-Staff**
+- **Live app:** http://aide-web-818515814116.s3-website-us-east-1.amazonaws.com
+- **Live API:** https://h8m79exwpc.execute-api.us-east-1.amazonaws.com/health
+- **Source code:** https://github.com/suryansh639/Weekend-Productivity-Challenge-Aide-Your-AI-Chief-of-Staff
 
 Run it locally in two commands (see the README) — it works fully offline with a mock
-LLM and seeded inbox, then deploys to AWS with `sam deploy --guided`.
+LLM and seeded inbox, then deploys to AWS with the steps in `docs/DEPLOY.md`.
